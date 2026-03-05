@@ -33,7 +33,7 @@ import { ReportModule } from './Reports/report.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // مهم جدًا في production
+      synchronize: true, 
     }),
     DoctorModule,
     ClinicsModule,
