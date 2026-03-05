@@ -15,15 +15,25 @@ import { ReportModule } from './Reports/report.module';
 
 @Module({
   imports: [
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: 'localhost', // Change if using a remote DB
+    //   port: 3306, // Default MySQL port
+    //   username: 'root', // Your phpMyAdmin username
+    //   password: '', // Your MySQL password
+    //   database: 'clinics', // Name of your database
+    //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    //   synchronize: true, // Set to false in production!
+    // }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost', // Change if using a remote DB
-      port: 3306, // Default MySQL port
-      username: 'root', // Your phpMyAdmin username
-      password: '', // Your MySQL password
-      database: 'clinics', // Name of your database
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // Set to false in production!
+      synchronize: true, // مهم جدًا في production
     }),
     DoctorModule,
     ClinicsModule,
@@ -41,4 +51,4 @@ import { ReportModule } from './Reports/report.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
