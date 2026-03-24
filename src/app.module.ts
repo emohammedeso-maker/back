@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -18,35 +17,14 @@ dotenv.config();
 @Module({
   
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), 
     TypeOrmModule.forRoot({
       type: 'mysql',
       url: process.env.MYSQL_URL,
       ssl: { rejectUnauthorized: false }, 
-      connectTimeout: 10000,
+      connectTimeout: 20000,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false,
     }),
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: 'localhost', // Change if using a remote DB
-    //   port: 3306, // Default MySQL port
-    //   username: 'root', // Your phpMyAdmin username
-    //   password: '', // Your MySQL password
-    //   database: 'clinics', // Name of your database
-    //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    //   synchronize: true, // Set to false in production!
-    // }),
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: process.env.DB_HOST,
-    //   port: Number(process.env.DB_PORT),
-    //   username: process.env.DB_USERNAME,
-    //   password: process.env.DB_PASSWORD,
-    //   database: process.env.DB_NAME,
-    //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    //   synchronize: false, 
-    // }),
     DoctorModule,
     ClinicsModule,
     SurgeryModule,
