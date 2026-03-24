@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -11,13 +12,18 @@ import { ReservationModule } from './reservation/reservation.module';
 import { PatientModule } from './Patient/patient.module';
 import { AuthModule } from './Auth/auth.module';
 import { ReportModule } from './Reports/report.module';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }), 
     TypeOrmModule.forRoot({
       type: 'mysql',
       url: process.env.MYSQL_URL,
+      ssl: { rejectUnauthorized: false }, 
+      connectTimeout: 10000,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false,
     }),
