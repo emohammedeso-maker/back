@@ -13,6 +13,7 @@ import { AuthModule } from './Auth/auth.module';
 import { ReportModule } from './Reports/report.module';
 
 @Module({
+  
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',

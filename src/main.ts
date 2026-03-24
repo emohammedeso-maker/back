@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
 async function bootstrap() {
+   console.log("MYSQL_URL:", process.env.MYSQL_URL);
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   
