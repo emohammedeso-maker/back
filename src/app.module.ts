@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-//import { Car } from './AllCars/entities/car.entity';
 import { MulterModule } from '@nestjs/platform-express';
 import { DoctorModule } from './Doctors/doctor.module';
 import { ClinicsModule } from './Clinics/clinics.module';
@@ -15,6 +14,12 @@ import { ReportModule } from './Reports/report.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      url: process.env.MYSQL_URL,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: false,
+    }),
     // TypeOrmModule.forRoot({
     //   type: 'mysql',
     //   host: 'localhost', // Change if using a remote DB
@@ -25,16 +30,16 @@ import { ReportModule } from './Reports/report.module';
     //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
     //   synchronize: true, // Set to false in production!
     // }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, 
-    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: process.env.DB_HOST,
+    //   port: Number(process.env.DB_PORT),
+    //   username: process.env.DB_USERNAME,
+    //   password: process.env.DB_PASSWORD,
+    //   database: process.env.DB_NAME,
+    //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    //   synchronize: false, 
+    // }),
     DoctorModule,
     ClinicsModule,
     SurgeryModule,
@@ -44,7 +49,7 @@ import { ReportModule } from './Reports/report.module';
     AuthModule,
     ReportModule,
     MulterModule.register({
-      dest: './uploads', // This is where images will be stored
+      dest: process.env.UPLOAD_PATH || './uploads',
     }),
     ReservationModule,
   ],
